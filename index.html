@@ -4,144 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: monospace;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 120px;
-            height: 34px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #333;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        input:checked+.slider {
-            background-color: #777;
-        }
-
-        input:checked+.slider:before {
-            background-color: #222;
-        }
-
-        input:focus+.slider {
-            box-shadow: 0 0 1px #777;
-        }
-
-        input:checked+.slider:before {
-            -webkit-transform: translateX(84px);
-            -ms-transform: translateX(84px);
-            transform: translateX(84px);
-        }
-
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        .container {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .animated-bg {
-            transition-property: background-color;
-            transition-duration: .5s;
-        }
-
-        #display {
-            left: 72px;
-            z-index: 1000;
-            position: relative;
-            color: white;
-            pointer-events: none;
-        }
-
-        img#control-button {
-            opacity: 0.8;
-            cursor: pointer;
-            margin-left: 8px;
-        }
-
-        .circles {
-            position: relative;
-        }
-
-        .circle {
-            visibility: hidden;
-            z-index: -1;
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            opacity: 0;
-            border: 1px;
-            border-style: solid;
-            border-color: black;
-            border-radius: 100%;
-            animation: ripples 2s linear;
-            animation-iteration-count: infinite;
-            transition-property: all;
-            transition-duration: .33s;
-        }
-
-        @keyframes ripples {
-            0% {
-                opacity: 0;
-                width: 200px;
-                height: 200px;
-                border-width: 1px;
-            }
-
-            50% {
-                opacity: 1;
-                border-width: 3px;
-            }
-
-            100% {
-                opacity: 0;
-                width: 500px;
-                height: 500px;
-                border-width: 0px;
-            }
-        }
-    </style>
+    <title> 🎸 The Sitcom Theme Player </title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="container animated-bg">
@@ -153,8 +17,6 @@
         <source src="./assets/audio/loud.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="circles"></div>
-
     <h4 id="display">GAIN</h4>
     <label class="switch">
         <input type="checkbox" id="toggle">
@@ -163,79 +25,7 @@
 
     <img id="control-button" src="./assets/icons/play-icon.svg" />
 
-    <script>
-        let playing = false
-        let engaged = false
-
-        const calm = document.getElementById("calm-audio")
-        calm.volume = 0.8
-
-        const loud = document.getElementById("loud-audio")
-        loud.volume = 0.0
-
-        const display = document.getElementById("display")
-
-        const toggle = document.getElementById("toggle")
-        toggle.onchange = (event) => {
-            engaged = event.target.checked
-            if (engaged) {
-                calm.volume = 0
-                loud.volume = 0.8
-
-                control.style.webkitFilter = 'invert(1)'
-                document.body.style.background = '#222'
-                display.innerText = "PAIN"
-
-                for (let element of document.getElementsByClassName("circle")) {
-                    element.style.borderRadius = '10%'
-                    element.style.borderColor = 'white'
-                }
-            } else {
-                calm.volume = 0.8
-                loud.volume = 0
-
-                control.style.webkitFilter = 'invert(0)'
-                document.body.style.background = 'white'
-                display.innerText = "GAIN"
-
-                for (let element of document.getElementsByClassName("circle")) {
-                    element.style.borderRadius = '100%'
-                    element.style.borderColor = 'black'
-                }
-            }
-        }
-
-        const control = document.getElementById("control-button")
-        control.onclick = () => {
-            if (playing) {
-                calm.pause()
-                loud.pause()
-                playing = false
-                control.src = './assets/icons/play-icon.svg'
-
-                for (let element of document.getElementsByClassName("circle")) {
-                    element.style.visibility = 'hidden'
-                }
-            } else {
-                calm.play()
-                loud.play()
-                playing = true
-                control.src = './assets/icons/pause-icon.svg'
-
-                for (let element of document.getElementsByClassName("circle")) {
-                    element.style.visibility = 'visible'
-                }
-            }
-        }
-
-        for (let i = 0; i < 10; i++) {
-            const div = document.createElement("div")
-            div.classList.add("circle")
-            div.style.animationDelay = (i * 100) + "ms"
-            document.body.appendChild(div)
-        }
-
-    </script>
+    <script src="main.js"></script>
 </body>
 
 </html>
